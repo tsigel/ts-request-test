@@ -8,7 +8,7 @@ XMLHttpRequest.config({
     }
 });
 
-describe('status', () => {
+describe('XMLHttpRequest', () => {
 
     it('200', (done) => {
         var xnr = new XMLHttpRequest();
@@ -34,6 +34,20 @@ describe('status', () => {
             expect(xnr.status).to.be(404);
             done();
         };
+    });
+
+    it('toDebug', (done) => {
+
+        var xnr = new XMLHttpRequest();
+        XMLHttpRequest.toDebug((xhr) => {
+            if (xhr.readyState == 4) {
+                expect(xhr.url).to.be('some');
+                done();
+            }
+        });
+        xnr.open('GET', 'some', true);
+        xnr.send();
+
     });
 
 });

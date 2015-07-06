@@ -90,6 +90,10 @@ class Request {
             this.onreadystatechange();
         }
 
+        if (Request.debugCallback) {
+            Request.debugCallback(this);
+        }
+
         if (this.readyState != 4) {
             Request.wait(Request.getInt(0, 50), () => {
                 this.setNextStep(repeatCount);
@@ -130,6 +134,10 @@ class Request {
         return this.async;
     }
 
+    public static toDebug(callback) {
+        this.debugCallback = callback;
+    }
+
     private static wait(time:number, callback:() => void):void {
         setTimeout(callback, time);
     }
@@ -143,6 +151,8 @@ class Request {
     private static hasNotValue(some:any) {
         return some === undefined;
     }
+
+    private static debugCallback = null;
 
 }
 
